@@ -5,7 +5,7 @@ interface IssueContextType {
   repository: string;
   issues: any[]; // 이슈 데이터
   selectedIssue: any | null; // 선택된 이슈
-  setIssues: (issues: any[]) => void;
+  setIssues: React.Dispatch<React.SetStateAction<any[]>>;
   setSelectedIssue: (issue: any) => void;
 }
 
