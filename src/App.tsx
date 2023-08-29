@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { IssueProvider } from "./context/IssueContext";
-import Header from "./components/Header";
-import IssueListPage from "./pages/IssueListPage";
+import Header from "./components/Header/Header";
+import IssueListPage from "./pages/IssueListpage";
 import IssueDetailPage from "./pages/IssueDetailPage";
 import "./styles/tailwind.css";
 
