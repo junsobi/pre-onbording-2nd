@@ -1,46 +1,29 @@
-import { useState, useEffect } from "react";
-import { useIssues } from "../../../context/IssueContext";
-import { getIssueList } from "../../../api";
-import { throttle } from "../../../utils/throttle";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { useIssuess } from "../../../context/IssueContext";
+import useFetchNextPage from "../../../api/hooks/useFetchNextPage";
 
 const useInfiniteScrollIssues = () => {
-  const { issues, setIssues } = useIssues();
+  const { setIssues } = useIssuess();
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const observer = useRef<IntersectionObserver | null>(null);
 
-  const fetchIssues = async () => {
-    setIsLoading(true);
-    try {
-      const newIssues = await getIssueList(page);
-      setIssues((prevIssues) => [...prevIssues, ...newIssues]);
-      setPage((prevPage) => prevPage + 1);
-    } catch (error) {
-      console.error("Error fetching issues:", error);
-    }
-    setIsLoading(false);
-  };
-
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    )
-      return;
-
-    fetchIssues();
-  };
-
-  const throttledHandleScroll = throttle(handleScroll, 200);
+  const fetchNextPage = useFetchNextPage(setIssues);
 
   useEffect(() => {
-    fetchIssues();
-    window.addEventListener("scroll", throttledHandleScroll);
-    return () => {
-      window.removeEventListener("scroll", throttledHandleScroll);
-    };
+    fetchNextPage(page);
+  }, [page, fetchNextPage]);
+
+  const lastIssueRef = useCallback((node: HTMLDivElement | null) => {
+    if (observer.current) observer.current.disconnect();
+
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) setPage((prevPage) => prevPage + 1);
+    });
+
+    if (node) observer.current.observe(node);
   }, []);
 
-  return issues;
+  return lastIssueRef;
 };
 
 export default useInfiniteScrollIssues;

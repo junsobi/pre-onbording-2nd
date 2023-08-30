@@ -1,12 +1,16 @@
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode, useEffect } from "react";
+import useFetchFirstIssues from "../api/hooks/useFetchFirstIssues";
+import useFetchIssueDetail from "../api/hooks/useFetchIssueDetail";
 
 interface IssueContextType {
   organization: string;
   repository: string;
   issues: any[]; // 이슈 데이터
-  selectedIssue: any | null; // 선택된 이슈
+  selectedIssueNumber: number | null; // 선택된 이슈 번호
+  selectedIssueDetail: any | null; // 선택된 이슈 상세 정보
+  setSelectedIssueDetail: (issueDetail: any) => void;
   setIssues: React.Dispatch<React.SetStateAction<any[]>>;
-  setSelectedIssue: (issue: any) => void;
+  setSelectedIssueNumber: (issueNumber: number) => void;
 }
 
 const IssueContext = createContext<IssueContextType | undefined>(undefined);
@@ -17,7 +21,15 @@ interface Props {
 
 export const IssueProvider: React.FC<Props> = ({ children }) => {
   const [issues, setIssues] = React.useState<any[]>([]);
-  const [selectedIssue, setSelectedIssue] = React.useState<any | null>(null);
+  const [selectedIssueNumber, setSelectedIssueNumber] = React.useState<
+    number | null
+  >(null);
+  const [selectedIssueDetail, setSelectedIssueDetail] = React.useState<
+    any | null
+  >(null);
+
+  useFetchFirstIssues(setIssues);
+  useFetchIssueDetail(selectedIssueNumber, setSelectedIssueDetail);
 
   return (
     <IssueContext.Provider
@@ -25,9 +37,11 @@ export const IssueProvider: React.FC<Props> = ({ children }) => {
         organization: "facebook",
         repository: "react",
         issues,
-        selectedIssue,
+        selectedIssueNumber,
+        selectedIssueDetail,
+        setSelectedIssueDetail,
         setIssues,
-        setSelectedIssue,
+        setSelectedIssueNumber,
       }}
     >
       {children}
@@ -35,10 +49,10 @@ export const IssueProvider: React.FC<Props> = ({ children }) => {
   );
 };
 
-export const useIssues = (): IssueContextType => {
+export const useIssuess = (): IssueContextType => {
   const context = useContext(IssueContext);
   if (!context) {
-    throw new Error("useIssues must be used within an IssueProvider");
+    throw new Error("useIssuess must be used within an IsuuessProvider");
   }
   return context;
 };

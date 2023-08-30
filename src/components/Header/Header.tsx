@@ -1,8 +1,8 @@
 import React from "react";
-import { useIssues } from "../../context/IssueContext";
+import { useIssuess } from "../../context/IssueContext";
 
 const Header: React.FC = () => {
-  const { organization, repository } = useIssues();
+  const { organization, repository } = useIssuess();
 
   return (
     <header>

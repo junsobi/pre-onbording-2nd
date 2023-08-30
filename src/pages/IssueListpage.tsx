@@ -1,12 +1,13 @@
 import React from "react";
 import IssueList from "../components/IssueList/IssueList";
+import Header from "../components/Header/Header";
 
 const IssueListPage: React.FC = () => {
   return (
-    <div>
-      <h2>Issue List Page</h2>
+    <>
+      <Header />
       <IssueList />
-    </div>
+    </>
   );
 };
 

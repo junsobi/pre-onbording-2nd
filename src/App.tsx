@@ -10,7 +10,6 @@ function App() {
   return (
     <IssueProvider>
       <Router>
-        <Header />
         <Routes>
           <Route path="/" element={<IssueListPage />} />
           <Route path="/issue/:issueNumber" element={<IssueDetailPage />} />
