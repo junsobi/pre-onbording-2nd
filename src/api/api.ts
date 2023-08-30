@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = "https://api.github.com/repos/facebook/react/issues";
 
 const headers = {
-  Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
+  // Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
 };
 
 // Issue List API 호출 함수
