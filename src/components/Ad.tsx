@@ -6,8 +6,17 @@ const Ad: React.FC = () => {
   const adLink = "https://www.wanted.co.kr/";
 
   return (
-    <a href={adLink} target="_blank" rel="noopener noreferrer">
-      <img src={adImageUrl} alt="Ad" />
+    <a
+      href={adLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-full flex items-center justify-center h-32 border-b"
+    >
+      <img
+        src={adImageUrl}
+        alt="Ad"
+        className="max-h-32 object-contain mx-auto w-full h-auto"
+      />
     </a>
   );
 };
