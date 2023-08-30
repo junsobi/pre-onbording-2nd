@@ -1,5 +1,5 @@
 import React from "react";
-import { IssueItem } from "./IssueItem";
+import { IssueItem } from "./useIssueItem";
 import { useIssuess } from "../../context/IssueContext";
 import useInfiniteScrollIssues from "./hooks/useInfiniteScrollIssues";
 
