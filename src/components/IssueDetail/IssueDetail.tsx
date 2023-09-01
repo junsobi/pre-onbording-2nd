@@ -7,6 +7,7 @@ import UserLink from "../userLink";
 import Header from "../Header/Header";
 import "github-markdown-css/github-markdown.css";
 import { BiMessageSquareDetail } from "react-icons/bi";
+import LoadingComponent from "../LodingComponent";
 
 const IssueDetail: React.FC = () => {
   const {
@@ -19,14 +20,15 @@ const IssueDetail: React.FC = () => {
   useEffect(() => {
     setSelectedIssueDetail(null);
     setSelectedIssueNumber(issueNumber);
-  }, [issueNumber]);
+  }, [issueNumber, setSelectedIssueDetail, setSelectedIssueNumber]);
 
   if (!selectedIssueDetail) {
-    return <div>Loading...</div>;
+    return <LoadingComponent width={"full"} height={"full"} />;
   }
   const formattedDate = new Date(
     selectedIssueDetail.created_at
   ).toLocaleDateString();
+
   return (
     <div className="border z-50 ">
       <Header />

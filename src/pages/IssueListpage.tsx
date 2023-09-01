@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import IssueList from "../components/IssueList/useIssueList";
+import IssueList from "../components/IssueList/IssueList";
 import { useIssuess } from "../context/IssueContext";
 import IssueDetail from "../components/IssueDetail/IssueDetail";
 import IssueListLayout from "../layout/IssueListLayout";
